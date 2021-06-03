@@ -63,7 +63,7 @@ def predict3():
     r = request
 
     cleandata = r.data[5:]
-    cleandata = urllib.parse.unquote(cleandata)
+    cleandata = urllib.parse.unquote(str(cleandata))
 
     img = imread(io.BytesIO(base64.b64decode(str(cleandata))))
     
