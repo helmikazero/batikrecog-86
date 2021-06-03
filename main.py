@@ -65,7 +65,9 @@ def predict4():
 @app.route("/predict/full", methods=['POST'])
 def predict3():
     r = request
-
+    
+    print("-----------------------------------------")
+    print(r.data)
     print("--------------POST RECEIVED-------------")
     print(r.data[:20])
     print("--------------BASE64 RECEIVED-------------")
@@ -77,6 +79,7 @@ def predict3():
     print("---------XXXXXXXXXXXXXXX----------")
 
     img = imread(io.BytesIO(base64.b64decode(cleandata)))
+    
     
     print("image received")
     
@@ -90,7 +93,7 @@ def predict3():
     im_resized = im_pil.resize((150,150))
     img_array = image.img_to_array(im_resized) / 255.0
     image_array_expanded =np.expand_dims(img_array,axis=0)
-
+    
     img_vstack = np.vstack([image_array_expanded])
 
     #-------------
@@ -104,7 +107,7 @@ def predict3():
         fullReport["prediction"].append(curr_pred)
 
         index = index + 1
-    
+
 
     index = 0
 
