@@ -13,7 +13,6 @@
 .git
 .gitignore
 Procfile
-batikrecog-84-firebase-adminsdk-jbbex-c097ae4770.json
 
 # Python pycache:
 __pycache__/

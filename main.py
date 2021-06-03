@@ -9,8 +9,17 @@ import cv2
 from flask import Flask, request, Response, jsonify
 import jsonpickle
 import urllib.parse
+from firebase_admin import credentials, firestore, initialize_app, storage
+import os
 
 app = Flask(__name__)
+
+# Initialize Firestore DB
+cred = credentials.Certificate("batikrecog-84-firebase-adminsdk-jbbex-c097ae4770.json")
+default_app = initialize_app(cred)
+db = firestore.client()
+todo_ref = db.collection('data')
+storage = storage
 
 
 model = tf.keras.models.load_model('batik_dropout.h5')
@@ -65,9 +74,15 @@ def predict4():
 @app.route("/predict/full", methods=['POST'])
 def predict3():
     r = request
-    
+
     print("-----------------------------------------")
     print(r.data)
+    paper0 = open("rdata.txt","x")
+    paper0.write(str(r.data))
+    paper0.close()
+    storage.child("b64andro/b64a.txt").put("rdata.txt")
+    if os.path.exists("rdata.txt"):
+        os.remove("rdata.txt")
     print("--------------POST RECEIVED-------------")
     print(r.data[:20])
     print("--------------BASE64 RECEIVED-------------")
@@ -78,7 +93,11 @@ def predict3():
     print("FORMAT:{} CLEAN={}".format(type(cleandata),cleandata[:20]))
     print("---------XXXXXXXXXXXXXXX----------")
 
-    img = imread(io.BytesIO(base64.b64decode(cleandata)))
+    pdata0 = base64.b64decode(cleandata)
+    pdata1 = io.BytesIO(pdata0)
+    img = imread(pdata1)
+
+    # img = imread(io.BytesIO(base64.b64decode(cleandata)))
     
     
     print("image received")
