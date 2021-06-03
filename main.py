@@ -15,7 +15,8 @@ import urllib.parse
 app = Flask(__name__)
 
 
-model = tf.keras.models.load_model('batik_TL_ResNet50v2_3.h5')
+
+model = tf.keras.models.load_model('batik_dropout.h5')
 
 resizevalue = (150,150)
 
