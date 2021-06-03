@@ -1,3 +1,3 @@
-runtime: python37 # or another supported version
+runtime: python38 # or another supported version
 
 instance_class: F4_1G

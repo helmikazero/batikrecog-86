@@ -20,6 +20,10 @@ resizevalue = (150,150)
 @app.route("/predict/pcpy", methods=['POST'])
 def predict4():
     r = request
+    print("--------------POST RECEIVED-------------")
+    print(r.data[:20])
+    print("--------------BASE64 RECEIVED-------------")
+
     img = imread(io.BytesIO(base64.b64decode(r.data)))
     
     print("image received")
@@ -62,8 +66,15 @@ def predict4():
 def predict3():
     r = request
 
+    print("--------------POST RECEIVED-------------")
+    print(r.data[:20])
+    print("--------------BASE64 RECEIVED-------------")
+
     cleandata = r.data[5:]
     cleandata = urllib.parse.unquote(str(cleandata))
+    print("---------CLEANING RESULT----------")
+    print("FORMAT:{} CLEAN={}".format(type(cleandata),cleandata[:20]))
+    print("---------XXXXXXXXXXXXXXX----------")
 
     img = imread(io.BytesIO(base64.b64decode(str(cleandata))))
     
