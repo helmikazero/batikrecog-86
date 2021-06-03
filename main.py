@@ -1,5 +1,3 @@
-import requests
-from requests.models import StreamConsumedError
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from PIL import Image
@@ -13,7 +11,6 @@ import jsonpickle
 import urllib.parse
 
 app = Flask(__name__)
-
 
 
 model = tf.keras.models.load_model('batik_dropout.h5')
