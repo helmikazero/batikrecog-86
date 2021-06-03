@@ -76,7 +76,7 @@ def predict3():
     print("FORMAT:{} CLEAN={}".format(type(cleandata),cleandata[:20]))
     print("---------XXXXXXXXXXXXXXX----------")
 
-    img = imread(io.BytesIO(base64.b64decode(str(cleandata))))
+    img = imread(io.BytesIO(base64.b64decode(cleandata)))
     
     print("image received")
     
