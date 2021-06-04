@@ -10,7 +10,7 @@ from flask import Flask, request, Response, jsonify
 import jsonpickle
 import urllib.parse
 from firebase_admin import credentials, firestore, initialize_app, storage
-import os
+# import os
 
 app = Flask(__name__)
 
@@ -75,7 +75,7 @@ def predict3():
     r = request
 
     print("-----------------------------------------")
-    print(r.data)
+    # print(r.data)
     # paper0 = open("rdata.txt","x")
     # paper0.write(str(r.data))
     # paper0.close()
@@ -84,10 +84,12 @@ def predict3():
     #     os.remove("rdata.txt")
     print("--------------POST RECEIVED-------------")
     print(r.data[:20])
+    print(str(r.data[5:20]))
+    print(type(r.data[5:20].decode()))
     print("--------------BASE64 RECEIVED-------------")
 
-    cleandata = r.data[5:]
-    cleandata = urllib.parse.unquote(str(cleandata))
+    cleandata = r.data[5:].decode()
+    cleandata = urllib.parse.unquote(cleandata)
 
     cleandata_debug = cleandata[:20]
 
@@ -96,7 +98,7 @@ def predict3():
     print("FORMAT:{} CLEAN={}".format(type(cleandata),cleandata_debug))
     print("---------XXXXXXXXXXXXXXX----------")
 
-    pdata0 = base64.b64decode(cleandata)
+    pdata0 = base64.b64decode(str(cleandata))
     pdata1 = io.BytesIO(pdata0)
     img = imread(pdata1)
 
@@ -110,6 +112,8 @@ def predict3():
 
     #jika ada pre-process taro disini
     cvt_image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+
     im_pil = Image.fromarray(cvt_image)
 
     im_resized = im_pil.resize((150,150))
