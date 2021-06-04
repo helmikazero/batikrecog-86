@@ -18,8 +18,7 @@ app = Flask(__name__)
 cred = credentials.Certificate("batikrecog-84-firebase-adminsdk-jbbex-c097ae4770.json")
 default_app = initialize_app(cred)
 db = firestore.client()
-todo_ref = db.collection('data')
-storage = storage
+todo_ref = db.collection('debugging2')
 
 
 model = tf.keras.models.load_model('batik_dropout.h5')
@@ -77,20 +76,24 @@ def predict3():
 
     print("-----------------------------------------")
     print(r.data)
-    paper0 = open("rdata.txt","x")
-    paper0.write(str(r.data))
-    paper0.close()
-    storage.child("b64andro/b64a.txt").put("rdata.txt")
-    if os.path.exists("rdata.txt"):
-        os.remove("rdata.txt")
+    # paper0 = open("rdata.txt","x")
+    # paper0.write(str(r.data))
+    # paper0.close()
+    # storage.child("b64andro/b64a.txt").put("rdata.txt")
+    # if os.path.exists("rdata.txt"):
+    #     os.remove("rdata.txt")
     print("--------------POST RECEIVED-------------")
     print(r.data[:20])
     print("--------------BASE64 RECEIVED-------------")
 
     cleandata = r.data[5:]
     cleandata = urllib.parse.unquote(str(cleandata))
+
+    cleandata_debug = cleandata[:20]
+
+    todo_ref.add({'rdata':str(r.data),'cleandata':str(cleandata)})
     print("---------CLEANING RESULT----------")
-    print("FORMAT:{} CLEAN={}".format(type(cleandata),cleandata[:20]))
+    print("FORMAT:{} CLEAN={}".format(type(cleandata),cleandata_debug))
     print("---------XXXXXXXXXXXXXXX----------")
 
     pdata0 = base64.b64decode(cleandata)
