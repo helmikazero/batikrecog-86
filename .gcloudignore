@@ -13,6 +13,7 @@
 .git
 .gitignore
 Procfile
+clientsied
 
 # Python pycache:
 __pycache__/
